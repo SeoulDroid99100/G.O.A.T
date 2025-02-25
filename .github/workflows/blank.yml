@@ -1,4 +1,4 @@
-# GitHub Workflow for Bot Structure (Complete with Git Pus
+
 name: Create Telegram Bot Structure
 
 on:
@@ -76,7 +76,7 @@ jobs:
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/help_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/settings_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/__init__.py
-          touch telegram_sandbox_bot /bot/modules/general_commands/handlers/callback_handlers.py
+          touch telegram_sandbox_bot/bot/modules/general _commands/handlers/callback_handlers.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/message_handlers.py
           
           # Minigames
