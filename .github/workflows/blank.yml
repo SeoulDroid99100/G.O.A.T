@@ -3,6 +3,9 @@ name: Create Telegram Bot Structure
 on:
   workflow_dispatch:  # Manual trigger from GitHub UI
 
+permissions:
+  contents: write
+
 jobs:
   create-bot-structure:
     runs-on: ubuntu-latest
