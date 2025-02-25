@@ -1,6 +1,5 @@
 # GitHub Workflow for Bot Structure with Git Push
 
-```yaml
 name: Create Telegram Bot Structure
 
 on:
