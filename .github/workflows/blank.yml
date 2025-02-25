@@ -1,4 +1,7 @@
-name: Create Basic Bot Structure
+# GitHub Workflow for Bot Structure with Git Push
+
+```yaml
+name: Create Telegram Bot Structure
 
 on:
   workflow_dispatch:  # Manual trigger from GitHub UI
@@ -9,61 +12,89 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          persist-credentials: true
 
-      - name: Create bot structure
+      - name: Create directory structure
         run: |
-          # Create directories
-          mkdir -p telegram_sandbox_bot/bot/{core/{middleware,utils},modules/general_commands/{commands,handlers},data,config,logs}
-          
-          # Create core files
+          # Main bot structure
+          mkdir -p telegram_sandbox_bot/bot/core/middleware
+          mkdir -p telegram_sandbox_bot/bot/core/utils
+          mkdir -p telegram_sandbox_bot/bot/modules/general_commands/commands
+          mkdir -p telegram_sandbox_bot/bot/modules/general_commands/handlers
+          mkdir -p telegram_sandbox_bot/bot/config
+          mkdir -p telegram_sandbox_bot/bot/database/models
+          mkdir -p telegram_sandbox_bot/bot/database/repositories
+          mkdir -p telegram_sandbox_bot/bot/logs
+          mkdir -p telegram_sandbox_bot/bot/locales/en/LC_MESSAGES
+          mkdir -p telegram_sandbox_bot/bot/locales/ru/LC_MESSAGES
+          mkdir -p telegram_sandbox_bot/bot/locales/es/LC_MESSAGES
+
+      - name: Create empty files
+        run: |
+          # Core files
           touch telegram_sandbox_bot/bot/__init__.py
           touch telegram_sandbox_bot/bot/main.py
           
-          # Core module files
+          # Core module
           touch telegram_sandbox_bot/bot/core/__init__.py
           touch telegram_sandbox_bot/bot/core/bot_instance.py
           touch telegram_sandbox_bot/bot/core/config_loader.py
           touch telegram_sandbox_bot/bot/core/error_handler.py
           touch telegram_sandbox_bot/bot/core/logger.py
           
-          # Middleware files
+          # Middleware
           touch telegram_sandbox_bot/bot/core/middleware/__init__.py
           touch telegram_sandbox_bot/bot/core/middleware/rate_limiter.py
           touch telegram_sandbox_bot/bot/core/middleware/user_tracker.py
           touch telegram_sandbox_bot/bot/core/middleware/permission_checker.py
           
-          # Utils files
+          # Utils
           touch telegram_sandbox_bot/bot/core/utils/__init__.py
           touch telegram_sandbox_bot/bot/core/utils/helpers.py
           touch telegram_sandbox_bot/bot/core/utils/formatters.py
           touch telegram_sandbox_bot/bot/core/utils/validators.py
           touch telegram_sandbox_bot/bot/core/utils/time_utils.py
           
-          # Command module files
+          # Modules
           touch telegram_sandbox_bot/bot/modules/__init__.py
           touch telegram_sandbox_bot/bot/modules/base_module.py
+          
+          # General commands
           touch telegram_sandbox_bot/bot/modules/general_commands/__init__.py
           touch telegram_sandbox_bot/bot/modules/general_commands/general_commands.py
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/__init__.py
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/start_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/help_command.py
+          touch telegram_sandbox_bot/bot/modules/general_commands/commands/settings_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/__init__.py
+          touch telegram_sandbox_bot/bot/modules/general_commands/handlers/callback_handlers.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/message_handlers.py
           
-          # Config file
+          # Config
+          touch telegram_sandbox_bot/bot/config/__init__.py
           touch telegram_sandbox_bot/bot/config/config.ini
+          touch telegram_sandbox_bot/bot/config/environment.py
           
-          # Readme
-          echo "# Telegram Bot Structure" > telegram_sandbox_bot/README.md
-          echo "A basic structure for a modular Telegram bot" >> telegram_sandbox_bot/README.md
-
-      - name: Configure git
-        run: |
-          git config --global user.email "github-actions@github.com"
-          git config --global user.name "GitHub Actions"
+          # Database
+          touch telegram_sandbox_bot/bot/database/__init__.py
+          touch telegram_sandbox_bot/bot/database/connection.py
+          touch telegram_sandbox_bot/bot/database/models/__init__.py
+          touch telegram_sandbox_bot/bot/database/models/user.py
+          touch telegram_sandbox_bot/bot/ database/repositories/__init__.py
+          touch telegram_sandbox_bot/bot/database/repositories/base_repository.py
 
       - name: Commit changes
         run: |
-          git add telegram_sandbox_bot/
-          git commit -m "Create basic bot structure"
-          git push
+          git config --local user.name "GitHub Action"
+          git config --local user.email "action@github.com"
+          git add .
+          git commit -m "Create initial Telegram bot structure"
+
+      - name: Push changes
+        run: |
+          git push origin main
+
+      - name: Finalize workflow
+        run: |
+          echo "Telegram bot structure created and pushed to repository!"
