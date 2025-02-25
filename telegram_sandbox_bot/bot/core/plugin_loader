@@ -1,0 +1,40 @@
+import importlib
+import inspect
+from pathlib import Path
+from typing import Dict, Type
+from prometheus_client import Counter, Histogram
+
+class PluginLoader:
+    def __init__(self, app, config):
+        self.app = app
+        self.config = config
+        self.metrics = {
+            'commands': Counter('bot_commands', 'Command executions', ['command']),
+            'errors': Counter('bot_errors', 'Command errors', ['command']),
+            'latency': Histogram('bot_latency', 'Command latency', ['command'])
+        }
+        
+    def load_from_path(self, path: str):
+        base_path = Path(__file__).parent.parent.parent / path.replace(".", "/")
+        
+        for file_path in base_path.glob("**/*.py"):
+            if file_path.name == "__init__.py":
+                continue
+                
+            module_path = file_path.relative_to(base_path.parent).with_suffix("")
+            module_name = ".".join(module_path.parts)
+            
+            try:
+                module = importlib.import_module(module_name)
+                self._register_module(module)
+            except ImportError as e:
+                print(f"Failed to load {module_name}: {e}")
+
+    def _register_module(self, module):
+        for name, obj in inspect.getmembers(module):
+            if inspect.isclass(obj) and issubclass(obj, BaseModule):
+                instance = obj(self.app, self.config, self.metrics)
+                instance.register()
+            elif inspect.isfunction(obj) and hasattr(obj, "_handler"):
+                filters, group = obj._handler
+                self.app.add_handler(obj, group)￼Enter
