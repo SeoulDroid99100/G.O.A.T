@@ -19,4 +19,4 @@ class ConnectionPool:
     async def acquire(self):
         async with self.pool.acquire() as conn:
             async with conn.transaction():
-                yield conn￼Enter
+                yield conn
