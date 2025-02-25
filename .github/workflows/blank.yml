@@ -1,5 +1,4 @@
-# GitHub Workflow for Bot Structure with Git Push
-
+# GitHub Workflow for Bot Structure (Complete with Git Pus
 name: Create Telegram Bot Structure
 
 on:
@@ -21,9 +20,18 @@ jobs:
           mkdir -p telegram_sandbox_bot/bot/core/utils
           mkdir -p telegram_sandbox_bot/bot/modules/general_commands/commands
           mkdir -p telegram_sandbox_bot/bot/modules/general_commands/handlers
+          mkdir -p telegram_sandbox_bot/bot/modules/minigames/commands
+          mkdir -p telegram_sandbox_bot/bot/modules/minigames/handlers
+          mkdir -p telegram_sandbox_bot/bot/modules/minigames/logic
+          mkdir -p telegram_sandbox_bot/bot/modules/minigames/models
           mkdir -p telegram_sandbox_bot/bot/config
           mkdir -p telegram_sandbox_bot/bot/database/models
+          mkdir -p telegram_sandbox_bot/bot/database/migrations
           mkdir -p telegram_sandbox_bot/bot/database/repositories
+          mkdir -p telegram_sandbox_bot/bot/data/cache
+          mkdir -p telegram_sandbox_bot/bot/data/storage
+          mkdir -p telegram_sandbox_bot/bot/api/controllers
+          mkdir -p telegram_sandbox_bot/bot/api/middlewares
           mkdir -p telegram_sandbox_bot/bot/logs
           mkdir -p telegram_sandbox_bot/bot/locales/en/LC_MESSAGES
           mkdir -p telegram_sandbox_bot/bot/locales/ru/LC_MESSAGES
@@ -34,6 +42,7 @@ jobs:
           # Core files
           touch telegram_sandbox_bot/bot/__init__.py
           touch telegram_sandbox_bot/bot/main.py
+          touch telegram_sandbox_bot/bot/wsgi.py
           
           # Core module
           touch telegram_sandbox_bot/bot/core/__init__.py
@@ -67,8 +76,18 @@ jobs:
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/help_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/commands/settings_command.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/__init__.py
-          touch telegram_sandbox_bot/bot/modules/general_commands/handlers/callback_handlers.py
+          touch telegram_sandbox_bot /bot/modules/general_commands/handlers/callback_handlers.py
           touch telegram_sandbox_bot/bot/modules/general_commands/handlers/message_handlers.py
+          
+          # Minigames
+          touch telegram_sandbox_bot/bot/modules/minigames/__init__.py
+          touch telegram_sandbox_bot/bot/modules/minigames/minigames.py
+          touch telegram_sandbox_bot/bot/modules/minigames/commands/__init__.py
+          touch telegram_sandbox_bot/bot/modules/minigames/commands/start_game.py
+          touch telegram_sandbox_bot/bot/modules/minigames/handlers/__init__.py
+          touch telegram_sandbox_bot/bot/modules/minigames/handlers/game_handlers.py
+          touch telegram_sandbox_bot/bot/modules/minigames/logic/game_logic.py
+          touch telegram_sandbox_bot/bot/modules/minigames/models/game_model.py
           
           # Config
           touch telegram_sandbox_bot/bot/config/__init__.py
@@ -80,15 +99,18 @@ jobs:
           touch telegram_sandbox_bot/bot/database/connection.py
           touch telegram_sandbox_bot/bot/database/models/__init__.py
           touch telegram_sandbox_bot/bot/database/models/user.py
-          touch telegram_sandbox_bot/bot/ database/repositories/__init__.py
+          touch telegram_sandbox_bot/bot/database/models/game.py
+          touch telegram_sandbox_bot/bot/database/migrations/__init__.py
+          touch telegram_sandbox_bot/bot/database/repositories/__init__.py
           touch telegram_sandbox_bot/bot/database/repositories/base_repository.py
+          touch telegram_sandbox_bot/bot/database/repositories/user_repository.py
 
       - name: Commit changes
         run: |
           git config --local user.name "GitHub Action"
           git config --local user.email "action@github.com"
           git add .
-          git commit -m "Create initial Telegram bot structure"
+          git commit -m "Create complete Telegram bot structure"
 
       - name: Push changes
         run: |
@@ -96,4 +118,4 @@ jobs:
 
       - name: Finalize workflow
         run: |
-          echo "Telegram bot structure created and pushed to repository!"
+          echo "Complete Telegram bot structure created and pushed to repository!"
